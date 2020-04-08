@@ -1,39 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using gorila_cdb.IService;
+using gorila_cdb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace gorila_cdb.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class HomeController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly gorila_cdbContext _context;
+        private IEnumerable<CdbOutput> _cdbOutput;
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ICdbOutputService _iCdbOutputService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(ILogger<HomeController> logger, gorila_cdbContext context, ICdbOutputService iCdbOutputService)
         {
             _logger = logger;
+            _context = context;
+            _iCdbOutputService = iCdbOutputService;
         }
 
-        [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        // POST: api/Home
+        [HttpPost]
+        public IActionResult PostCdbInput(CdbInput cdbInput)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            IList<Error> error = _iCdbOutputService.Validate(cdbInput);
+
+            if(error.Count == 0)
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                _context.CdbInput.Add(cdbInput);
+                _context.SaveChangesAsync();
+
+                _cdbOutput = _iCdbOutputService.GetResult();
+                return CreatedAtAction(nameof(GetCdbOutput), _cdbOutput);
+            }
+            else
+            {
+                return BadRequest(error);
+            }
+        }
+
+        // GET: api/Home
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CdbOutput>>> GetCdbOutput()
+        {
+            return await _context.CdbOutput.ToListAsync();
         }
     }
 }
