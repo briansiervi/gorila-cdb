@@ -1,56 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using gorila_cdb.IService;
-using gorila_cdb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
 
 namespace gorila_cdb.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class HomeController : ControllerBase
+    public class WeatherForecastController : ControllerBase
     {
-        private readonly gorila_cdbContext _context;
-        private IEnumerable<CdbOutput> _cdbOutput;
+        private static readonly string[] Summaries = new[]
+        {
+            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        };
 
-        private readonly ICdbOutputService _iCdbOutputService;
+        private readonly ILogger<WeatherForecastController> _logger;
 
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger, gorila_cdbContext context, ICdbOutputService iCdbOutputService)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-            _context = context;
-            _iCdbOutputService = iCdbOutputService;
         }
 
-        // POST: api/Home
-        [HttpPost]
-        public IActionResult PostCdbInput(CdbInput cdbInput)
-        {
-            IList<Error> error = _iCdbOutputService.Validate(cdbInput);
-
-            if(error.Count == 0)
-            {
-                _context.CdbInput.Add(cdbInput);
-                _context.SaveChangesAsync();
-
-                _cdbOutput = _iCdbOutputService.GetResult();
-                return CreatedAtAction(nameof(GetCdbOutput), _cdbOutput);
-            }
-            else
-            {
-                return BadRequest(error);
-            }
-        }
-
-        // GET: api/Home
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CdbOutput>>> GetCdbOutput()
+        public IEnumerable<WeatherForecast> Get()
         {
-            return await _context.CdbOutput.ToListAsync();
+            var rng = new Random();
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            })
+            .ToArray();
         }
     }
 }
