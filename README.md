@@ -1,8 +1,11 @@
-# gorila-cdb
-# Realizando chamadas remotas ao servidor
+# Aplicação web
+- A aplicação web foi criada em react e está [disponível aqui](https://gorila-cdb.azurewebsites.net/)
+
+# API
+## Realizando chamadas remotas ao servidor
 - Use um editor de api's restful de sua preferência para os testes abaixo.
 
-## Exemplos de requisições
+### Exemplos de requisições
 
 #### /GET
 - enpoint: https://gorila-cdb.azurewebsites.net/health
@@ -75,7 +78,7 @@
             ]
             ```
 
-# Baixando o projeto para rodar localmente
+## Baixando o projeto para rodar localmente
 
 ### Passo 1 
 - Instale o dotnet sdk (versão 3.1) como descrito [aqui](https://dotnet.microsoft.com/learn/aspnet/hello-world-tutorial/install).
@@ -92,6 +95,6 @@
 ### Passo 3
 - Utilize os cenários acima para realizar os testes, trocando os endpoints de https://gorila-cdb.azurewebsites.net/ para https://localhost:5001/
 
-# Docker
+## Docker
 - Opcionalmente você poderá rodar este projeto com o docker
 - Recomendo utilizar [esta extensão](https://github.com/Microsoft/vscode-docker) do Vscode
