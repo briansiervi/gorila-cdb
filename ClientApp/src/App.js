@@ -137,7 +137,7 @@ const App = () => {
             </LineChart>
         </div>
         <div className="flex-large">
-          <InputForm parentCallback = {this.setResponseData}/>
+          <InputForm parentCallback = {setResponseData}/>
         </div>
       </div>
     </div>
