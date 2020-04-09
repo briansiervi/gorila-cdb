@@ -1,6 +1,4 @@
-// eslint-disable-next-line
 import React, { useState } from 'react';
-// eslint-disable-next-line
 import InputForm from './forms/InputForm';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
