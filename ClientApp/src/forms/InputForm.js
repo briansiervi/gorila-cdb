@@ -6,23 +6,14 @@ const InputForm = (props) => {
     const [currentDate, setCurrentDate] = useState('2016-12-23')
 
     const sendData = (investmentDate, cdbRate, currentDate) => {
-        // let urlPath = "https://calculocdbapi.azurewebsites.net/api/home"
-        let urlPath = "https://localhost:5001/api/home"
-
-        let fetchParameters = {
-            method: 'POST',            
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: new URLSearchParams({
-                "investmentDate": "2016-11-14",
-                "cdbRate": "103,5",
-                "currentDate": "2016-11-23"
-            })
+        let request = {
+            "investmentDate": "2016-11-14",
+            "cdbRate": 103.5,
+            "currentDate": "2016-11-23"
         }
 
-        fetch(urlPath, fetchParameters)
-        .then(response => response.text())
+        fetch('/api/home', request)
+        .then(response => response.json())
         .then((text) => {
             console.log(text)
         });
