@@ -20,7 +20,10 @@ const InputForm = (props) => {
 
         fetch('/api/home', request)
         .then(response => response.json())
-        .then((text) => this.props.parentCallback(text));
+        .then((text) => {
+            console.log(text)
+            // InputForm.props.parentCallback(text)
+        });
     }
 
     return (
