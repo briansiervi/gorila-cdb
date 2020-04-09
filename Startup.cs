@@ -49,7 +49,7 @@ namespace gorila_cdb
                 SupportedCultures = supportedCultures,
                 SupportedUICultures = supportedCultures
             });
-            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -81,6 +81,7 @@ namespace gorila_cdb
 
                 if (env.IsDevelopment())
                 {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
