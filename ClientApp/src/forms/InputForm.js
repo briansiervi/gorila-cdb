@@ -4,6 +4,7 @@ const InputForm = (props) => {
     const [investmentDate, setInvestmentDate] = useState('2016-11-14')
     const [cdbRate, setCdbRate] = useState(103.5)
     const [currentDate, setCurrentDate] = useState('2016-12-23')
+    const data = []
 
     const sendData = (investmentDate, cdbRate, currentDate) => {
         let request = {
@@ -20,9 +21,8 @@ const InputForm = (props) => {
 
         fetch('/api/home', request)
         .then(response => response.json())
-        .then((text) => {
-            console.log(text)
-            // InputForm.props.parentCallback(text)
+        .then((event) => {
+            props.parentCallback(event)
         });
     }
 

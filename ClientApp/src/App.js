@@ -122,6 +122,10 @@ const App = () => {
     }
   ]);
 
+  const onChange = (data) => {
+    setResponseData(data)
+  }
+
   return (
     <div className="container">
       <h1>Taxa CDI Acumulada</h1>
@@ -137,7 +141,7 @@ const App = () => {
             </LineChart>
         </div>
         <div className="flex-large">
-          <InputForm parentCallback = {setResponseData}/>
+          <InputForm parentCallback = {onChange}/>
         </div>
       </div>
     </div>
