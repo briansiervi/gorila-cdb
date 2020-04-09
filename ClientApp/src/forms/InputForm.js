@@ -12,9 +12,9 @@ const InputForm = (props) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                investmentDate: "2016-11-14",
-                cdbRate: 103.5,
-                currentDate: "2016-11-23"
+                investmentDate: investmentDate,
+                cdbRate: cdbRate,
+                currentDate: currentDate
             })
         }
 
