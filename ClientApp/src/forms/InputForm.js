@@ -7,16 +7,20 @@ const InputForm = (props) => {
 
     const sendData = (investmentDate, cdbRate, currentDate) => {
         let request = {
-            "investmentDate": "2016-11-14",
-            "cdbRate": 103.5,
-            "currentDate": "2016-11-23"
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                investmentDate: "2016-11-14",
+                cdbRate: 103.5,
+                currentDate: "2016-11-23"
+            })
         }
 
         fetch('/api/home', request)
         .then(response => response.json())
-        .then((text) => {
-            console.log(text)
-        });
+        .then((text) => this.props.parentCallback(text));
     }
 
     return (

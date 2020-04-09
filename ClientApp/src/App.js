@@ -1,9 +1,11 @@
-import React from 'react';
+// eslint-disable-next-line
+import React, { useState } from 'react';
+// eslint-disable-next-line
 import InputForm from './forms/InputForm';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const App = () => {
-  const responseData = [
+  const [responseData, setResponseData] = useState([
     {
       "date": "2016-11-14",
       "unitPrice": 1.0111489786000000
@@ -120,7 +122,7 @@ const App = () => {
       "date": "2016-12-23",
       "unitPrice": 1.3776080604056200
     }
-  ];
+  ]);
 
   return (
     <div className="container">
@@ -137,7 +139,7 @@ const App = () => {
             </LineChart>
         </div>
         <div className="flex-large">
-          <InputForm/>
+          <InputForm parentCallback = {this.setResponseData}/>
         </div>
       </div>
     </div>
